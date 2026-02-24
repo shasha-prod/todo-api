@@ -10,4 +10,22 @@ const pool = new Pool({
   ssl: process.env.DB_HOST !== 'localhost' ? { rejectUnauthorized: false } : false,
 });
 
+const initDb = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS todos (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        completed BOOLEAN DEFAULT false,
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    console.log('Database initialized');
+  } catch (err) {
+    console.error('Database initialization failed:', err.message);
+  }
+};
+
+initDb();
+
 module.exports = pool;
