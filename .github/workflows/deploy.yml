@@ -40,7 +40,7 @@ jobs:
 
       - name: Setup test database
         run: |
-          PGPASSWORD=todopass psql -h localhost -U todouser -d tododb -c "
+          PGPASSWORD=todopass123 psql -h localhost -U todouser -d tododb -c "
           CREATE TABLE IF NOT EXISTS todos (
             id SERIAL PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
@@ -54,7 +54,7 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_USER: todouser
-          DB_PASSWORD: todopass
+          DB_PASSWORD: todopass123
           DB_NAME: tododb
         run: npm test
 
@@ -106,6 +106,6 @@ jobs:
               -e DB_HOST=${{ secrets.RDS_ENDPOINT }} \
               -e DB_PORT=5432 \
               -e DB_USER=todouser \
-              -e DB_PASSWORD=todopass \
+              -e DB_PASSWORD=todopass123 \
               -e DB_NAME=tododb \
               ${{ steps.login-ecr.outputs.registry }}/todo-api:latest
